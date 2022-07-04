@@ -13,3 +13,9 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+# Test Folder for Local Testing
+test/*
+
+# Dot env file used for reading environment
+.env
