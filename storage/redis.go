@@ -11,6 +11,10 @@ var _ Hub = new(redisStorage)
 
 // NewGoRedisV8 creates a new redis client for storage.Hub.
 func NewGoRedisV8(c *redis.Client) (h Hub) {
+	if c == nil {
+		return nil
+	}
+
 	h = &redisStorage{
 		Client: c,
 	}
