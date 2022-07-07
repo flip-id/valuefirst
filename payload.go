@@ -1,6 +1,7 @@
 package valuefirst
 
 import (
+	"github.com/fairyhunter13/phone"
 	"strconv"
 )
 
@@ -137,12 +138,18 @@ type RequestSendSMSMessageAddress struct {
 	Tag string `json:"@TAG"`
 }
 
+// Normalize normalizes the RequestSendSMSMessageAddress.
+func (r *RequestSendSMSMessageAddress) Normalize() *RequestSendSMSMessageAddress {
+	r.To = phone.NormalizeID(r.To, 0)
+	return r
+}
+
 // Default sets the default values for the RequestSendSMSMessageAddress.
 func (r *RequestSendSMSMessageAddress) Default(id int) *RequestSendSMSMessageAddress {
 	if r.Sequence == "" {
 		r.Sequence = strconv.Itoa(id + 1)
 	}
-	return r
+	return r.Normalize()
 }
 
 // GetMessageGUID return the GUID of the ResponseMessageAck.
