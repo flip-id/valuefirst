@@ -24,6 +24,18 @@ type ResponseMessageAck struct {
 	Error *ResponseMessageAckError `json:"Err,omitempty"`
 }
 
+// GetMessageGUID return the GUID of the ResponseMessageAck.
+func (r *ResponseMessageAck) GetMessageGUID() (res *ResponseMessageAckGUID, ok bool) {
+	res, ok = r.GUID.(*ResponseMessageAckGUID)
+	return
+}
+
+// GetMessageGUIDs return the GUIDs of the ResponseMessageAck.
+func (r *ResponseMessageAck) GetMessageGUIDs() (res *ResponseMessageAckGUIDs, ok bool) {
+	res, ok = r.GUID.(*ResponseMessageAckGUIDs)
+	return
+}
+
 // ResponseMessageAckError is the error part of the ResponseMessageAck.
 type ResponseMessageAckError struct {
 	Description string `json:"Desc"`
@@ -107,6 +119,18 @@ type ResponseMessageAckGUID struct {
 	// The Server sends the SMS ID so that
 	// the client application can map the GUID to the SMS ID provided by them.
 	ID int `json:"ID"`
+}
+
+// GetMessageError return the Error of the ResponseMessageAckGUID.
+func (r *ResponseMessageAckGUID) GetMessageError() (res *ResponseMessageAckGUIDError, ok bool) {
+	res, ok = r.Error.(*ResponseMessageAckGUIDError)
+	return
+}
+
+// GetMessageErrors return the Errors of the ResponseMessageAckGUID.
+func (r *ResponseMessageAckGUID) GetMessageErrors() (res *ResponseMessageAckGUIDErrors, ok bool) {
+	res, ok = r.Error.(*ResponseMessageAckGUIDErrors)
+	return
 }
 
 // GetError returns the Error of the ResponseMessageAckGUID.

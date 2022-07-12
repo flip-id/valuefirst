@@ -34,4 +34,35 @@ const (
 	DefaultPropertyText = "0"
 	// DefaultPropertyFlash is the default property used for the flash message.
 	DefaultPropertyFlash = "1"
+	// ChannelTypeWhatsapp is the channel type for Whatsapp messages.
+	ChannelTypeWhatsapp = "4"
+	// 	DefaultTemplateSeparator is the default separator used for TEMPLATEINFO in ValueFirst.
+	DefaultTemplateSeparator = "~"
+)
+
+// MessageType is the type of the message for Whatsapp.
+type MessageType string
+
+// String returns the string representation of the MessageType.
+func (m MessageType) String() string {
+	return string(m)
+}
+
+const (
+	// MessageTypePlain is the plain type of Whatsapp message.
+	MessageTypePlain MessageType = "1"
+	// MessageTypePlainTwoWay is the plain type of Whatsapp message with two-way communication.
+	MessageTypePlainTwoWay MessageType = "2"
+	// MessageTypeRich is the rich type of Whatsapp message.
+	MessageTypeRich MessageType = "3"
+	// MessageTypeRichTwoWay is the rich type of Whatsapp message with two-way communication.
+	MessageTypeRichTwoWay MessageType = "4"
+	// MessageTypeBusinessCardSharingTwoWay is the business card sharing type of Whatsapp message with two-way communication.
+	MessageTypeBusinessCardSharingTwoWay MessageType = "5"
+	// MessageTypeLocationSharingTwoWay is the location sharing type of Whatsapp message with two-way communication.
+	MessageTypeLocationSharingTwoWay MessageType = "6"
+	// MessageTypeListTwoWay is the list type of Whatsapp message with two-way communication.
+	MessageTypeListTwoWay MessageType = "7"
+	// MessageTypeReplyButtonTwoWay is the reply button type of Whatsapp message with two-way communication.
+	MessageTypeReplyButtonTwoWay MessageType = "8"
 )

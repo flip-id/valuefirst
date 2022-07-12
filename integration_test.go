@@ -48,6 +48,7 @@ func setupClient() {
 func TestMain(m *testing.M) {
 	flag.Parse()
 	setupClient()
+	setupClientWhatsapp()
 
 	os.Exit(m.Run())
 }

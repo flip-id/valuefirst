@@ -1,5 +1,7 @@
 package manager
 
+//go:generate mockgen -source=manager.go -destination=../mocks/manager.go -package=mocks
+
 import (
 	"context"
 	"time"
