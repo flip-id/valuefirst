@@ -104,6 +104,7 @@ func (r *RequestSendSMSMessage) Default(id int) *RequestSendSMSMessage {
 		r.ID = strconv.Itoa(id + 1)
 	}
 
+	r.Text = Encode(r.Text)
 	r.Address = r.Address.Default()
 	return r
 }

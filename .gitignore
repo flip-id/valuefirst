@@ -19,3 +19,7 @@ test/*
 
 # Dot env file used for reading environment
 .env
+
+# Editor Config Files
+.idea/
+.vscode/
