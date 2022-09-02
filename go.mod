@@ -10,6 +10,8 @@ require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/gofiber/fiber/v2 v2.34.1
 	github.com/gojek/heimdall/v7 v7.0.2
+	github.com/golang/mock v1.5.0
+	github.com/jarcoal/httpmock v1.2.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.7.1
 )

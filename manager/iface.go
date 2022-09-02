@@ -1,5 +1,7 @@
 package manager
 
+//go:generate mockgen -source=iface.go -destination=../mocks/iface.go -package=mocks
+
 import "context"
 
 // TokenClient is the contract of the token client to manage token.
