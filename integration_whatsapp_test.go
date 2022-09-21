@@ -60,5 +60,5 @@ func TestSendWhatsappPlainSuccess(t *testing.T) {
 	assert.NotEmpty(t, guid.GUID)
 	assert.NotEmpty(t, guid.SubmitDate)
 	assert.Nil(t, guid.Error)
-	assert.Equal(t, 1, guid.ID)
+	assert.Equal(t, 1, guid.ID.IntOnly())
 }

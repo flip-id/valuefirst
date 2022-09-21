@@ -97,7 +97,7 @@ func TestSendSMSMultipleSuccess(t *testing.T) {
 		assert.NotEmpty(t, guid.GUID)
 		assert.NotEmpty(t, guid.SubmitDate)
 		assert.Nil(t, guid.Error)
-		assert.Equal(t, idx+1, guid.ID)
+		assert.Equal(t, idx+1, guid.ID.IntOnly())
 	}
 }
 
@@ -130,7 +130,7 @@ func TestSendSingleSMSSuccess(t *testing.T) {
 	assert.NotEmpty(t, guid.GUID)
 	assert.NotEmpty(t, guid.SubmitDate)
 	assert.Nil(t, guid.Error)
-	assert.Equal(t, 1, guid.ID)
+	assert.Equal(t, 1, guid.ID.IntOnly())
 }
 
 func TestSendSMSMultipleError(t *testing.T) {
@@ -178,7 +178,7 @@ func TestSendSMSMultipleError(t *testing.T) {
 			assert.NotEmpty(t, guid.SubmitDate)
 			assert.NotNil(t, guid.Error)
 			assert.True(t, reflect.TypeOf(new(ResponseMessageAckGUIDError)) == reflect.TypeOf(guid.Error))
-			assert.Equal(t, idx+1, guid.ID)
+			assert.Equal(t, idx+1, guid.ID.IntOnly())
 		}
 	})
 	idx++
@@ -224,7 +224,7 @@ func TestSendSMSMultipleError(t *testing.T) {
 			assert.NotEmpty(t, guid.SubmitDate)
 			assert.NotNil(t, guid.Error)
 			assert.True(t, reflect.TypeOf(new(ResponseMessageAckGUIDError)) == reflect.TypeOf(guid.Error))
-			assert.Equal(t, idx+1, guid.ID)
+			assert.Equal(t, idx+1, guid.ID.IntOnly())
 		}
 	})
 }
@@ -263,7 +263,7 @@ func TestSendSMSSingleError(t *testing.T) {
 		assert.NotEmpty(t, guid.SubmitDate)
 		assert.NotNil(t, guid.Error)
 		assert.True(t, reflect.TypeOf(new(ResponseMessageAckGUIDError)) == reflect.TypeOf(guid.Error))
-		assert.Equal(t, 1, guid.ID)
+		assert.Equal(t, 1, guid.ID.IntOnly())
 	})
 	idx++
 	t.Run("no destination", func(t *testing.T) {
@@ -297,6 +297,6 @@ func TestSendSMSSingleError(t *testing.T) {
 		assert.NotEmpty(t, guid.SubmitDate)
 		assert.NotNil(t, guid.Error)
 		assert.True(t, reflect.TypeOf(new(ResponseMessageAckGUIDError)) == reflect.TypeOf(guid.Error))
-		assert.Equal(t, 1, guid.ID)
+		assert.Equal(t, 1, guid.ID.IntOnly())
 	})
 }

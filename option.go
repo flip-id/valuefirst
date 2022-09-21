@@ -3,7 +3,6 @@ package valuefirst
 import (
 	"github.com/fairyhunter13/reflecthelper/v5"
 	"github.com/flip-id/valuefirst/manager"
-	"github.com/flip-id/valuefirst/storage"
 	"net/http"
 	"strings"
 	"time"
@@ -68,13 +67,6 @@ func WithCustomIPs(ips ...string) FnOption {
 	}
 }
 
-// WithTokenStorage sets the token storage.
-func WithTokenStorage(s storage.Hub) FnOption {
-	return func(o *Option) {
-		o.TokenStorage = s
-	}
-}
-
 // WithTokenManager sets the token manager.
 func WithTokenManager(tm manager.TokenManager) FnOption {
 	return func(o *Option) {
@@ -82,18 +74,27 @@ func WithTokenManager(tm manager.TokenManager) FnOption {
 	}
 }
 
+// WithTokenManagerOptions sets the token manager options.
+func WithTokenManagerOptions(opts ...manager.FnOption) FnOption {
+	return func(o *Option) {
+		o.TokenManagerOptions = opts
+	}
+}
+
 // Option is a config for Value.
 type Option struct {
-	BaseURL        string
-	BasicAuth      OptionBasicAuth
-	Timeout        time.Duration
-	Client         heimdall.Doer
-	HystrixOptions []hystrix.Option
-	CustomIPs      []string
-	TokenStorage   storage.Hub
-	TokenManager   manager.TokenManager
-	client         *hystrix.Client
-	vfClient       *client
+	BaseURL             string
+	BasicAuth           OptionBasicAuth
+	Timeout             time.Duration
+	Client              heimdall.Doer
+	HystrixOptions      []hystrix.Option
+	CustomIPs           []string
+	TokenManager        manager.TokenManager
+	TokenManagerOptions []manager.FnOption
+
+	// private variables
+	client   *hystrix.Client
+	vfClient *client
 }
 
 // OptionBasicAuth is a config for basic authorization.
@@ -138,10 +139,6 @@ func (o *Option) Default() *Option {
 		o.Client = http.DefaultClient
 	}
 
-	if reflecthelper.IsNil(o.TokenStorage) {
-		o.TokenStorage = storage.NewLocalStorage()
-	}
-
 	o.client = hystrix.NewClient(
 		append(
 			[]hystrix.Option{
@@ -159,8 +156,10 @@ func (o *Option) Default() *Option {
 
 	if reflecthelper.IsNil(o.TokenManager) {
 		o.TokenManager = manager.New(
-			manager.WithClient(o.vfClient),
-			manager.WithStorage(o.TokenStorage),
+			append(
+				[]manager.FnOption{manager.WithClient(o.vfClient)},
+				o.TokenManagerOptions...,
+			)...,
 		)
 	}
 	return o
