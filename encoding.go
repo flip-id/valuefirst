@@ -2,25 +2,31 @@ package valuefirst
 
 import (
 	"fmt"
-	"github.com/fairyhunter13/pool"
 	"html"
+
+	"github.com/fairyhunter13/pool"
 )
 
 // These constants represents the lower and upper limit of the characters that don't have to be encoded.
 const (
-	LowerLimitEncoding = 32
-	UpperLimitEncoding = 128
+	LimitEncodingSingleDigit = 16
+	LimitEncodingLower       = 32
+	LimitEncodingUpper       = 128
 )
 
 func isEncoded(chr rune) bool {
-	return chr > UpperLimitEncoding ||
-		chr < LowerLimitEncoding ||
+	return chr > LimitEncodingUpper ||
+		chr < LimitEncodingLower ||
 		chr == '*' ||
 		chr == '#' ||
 		chr == '%' ||
 		chr == '<' ||
 		chr == '>' ||
 		chr == '+'
+}
+
+func isSingleDigit(chr rune) bool {
+	return chr < LimitEncodingSingleDigit
 }
 
 // Encode encodes the message using the step 2 encoding of ValueFirst documentation.
@@ -30,7 +36,9 @@ func Encode(msg string) (res string) {
 
 	for _, chr := range msg {
 		writeStr := string(chr)
-		if isEncoded(chr) {
+		if isSingleDigit(chr) {
+			writeStr = fmt.Sprintf("%%0%X", chr)
+		} else if isEncoded(chr) {
 			writeStr = fmt.Sprintf("%%%X", chr)
 		}
 

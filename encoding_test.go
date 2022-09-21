@@ -1,8 +1,12 @@
+//go:build !integration
+// +build !integration
+
 package valuefirst
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestEncode(t *testing.T) {
@@ -34,6 +38,20 @@ func TestEncode(t *testing.T) {
 				msg: "hello: " + string(rune(137)) + " world",
 			},
 			wantRes: "hello: %89 world",
+		},
+		{
+			name: "encode below the 16 - 1",
+			args: args{
+				msg: "hello: " + string(rune(10)) + "Test",
+			},
+			wantRes: "hello: %0ATest",
+		},
+		{
+			name: "encode below the 16 - 2",
+			args: args{
+				msg: "hello: " + string(rune(15)) + "Test",
+			},
+			wantRes: "hello: %0FTest",
 		},
 	}
 	for _, tt := range tests {
