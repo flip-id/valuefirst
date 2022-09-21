@@ -78,15 +78,15 @@ func (r ResponseMessageAckGUIDs) GetError() (err error) {
 			return
 		}
 
-		err = *errList
+		err = errList
 	}()
 
 	for _, val := range r {
 		switch newType := val.Error.(type) {
 		case *ResponseMessageAckGUIDError:
-			errList.Append(newType)
+			errList.Append(filterError(newType))
 		case *ResponseMessageAckGUIDErrors:
-			errList.Append(newType)
+			errList.Append(filterErrors(newType))
 		}
 	}
 	return
@@ -137,9 +137,9 @@ func (r *ResponseMessageAckGUID) GetMessageErrors() (res *ResponseMessageAckGUID
 func (r *ResponseMessageAckGUID) GetError() (err error) {
 	switch newType := r.Error.(type) {
 	case *ResponseMessageAckGUIDError:
-		err = newType
+		err = filterError(newType)
 	case *ResponseMessageAckGUIDErrors:
-		err = newType
+		err = filterErrors(newType)
 	}
 	return
 }
