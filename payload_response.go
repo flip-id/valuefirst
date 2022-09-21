@@ -1,6 +1,9 @@
 package valuefirst
 
-import "fmt"
+import (
+	"fmt"
+	rh "github.com/fairyhunter13/reflecthelper/v5"
+)
 
 // ResponseMessage is the message response of SendSMS.
 type ResponseMessage struct {
@@ -38,14 +41,19 @@ func (r *ResponseMessageAck) GetMessageGUIDs() (res *ResponseMessageAckGUIDs, ok
 
 // ResponseMessageAckError is the error part of the ResponseMessageAck.
 type ResponseMessageAckError struct {
-	Description string `json:"Desc"`
-	Code        int    `json:"Code"`
+	Description string      `json:"Desc"`
+	Code        interface{} `json:"Code"`
+}
+
+// GetCode returns the Code of the ResponseMessageAckError.
+func (r *ResponseMessageAckError) GetCode() ErrorCode {
+	return CastErrCode(r.Code)
 }
 
 // Error implements the error interface.
 func (r *ResponseMessageAckError) Error() string {
 	return fmt.Sprintf(
-		"error message ACK: %s (code: %d)",
+		"error message ACK: %s (code: %v)",
 		r.Description,
 		r.Code,
 	)
@@ -78,15 +86,15 @@ func (r ResponseMessageAckGUIDs) GetError() (err error) {
 			return
 		}
 
-		err = *errList
+		err = errList
 	}()
 
 	for _, val := range r {
 		switch newType := val.Error.(type) {
 		case *ResponseMessageAckGUIDError:
-			errList.Append(newType)
+			errList.Append(filterError(newType))
 		case *ResponseMessageAckGUIDErrors:
-			errList.Append(newType)
+			errList.Append(filterErrors(newType))
 		}
 	}
 	return
@@ -118,7 +126,12 @@ type ResponseMessageAckGUID struct {
 	// Unique SMS ID sent by the customer. For each message a unique GUID is generated.
 	// The Server sends the SMS ID so that
 	// the client application can map the GUID to the SMS ID provided by them.
-	ID int `json:"ID"`
+	ID interface{} `json:"ID"`
+}
+
+// GetID returns the ID string representation of the ResponseMessageAckGUID.
+func (r *ResponseMessageAckGUID) GetID() string {
+	return rh.GetString(r.ID)
 }
 
 // GetMessageError return the Error of the ResponseMessageAckGUID.
@@ -137,9 +150,9 @@ func (r *ResponseMessageAckGUID) GetMessageErrors() (res *ResponseMessageAckGUID
 func (r *ResponseMessageAckGUID) GetError() (err error) {
 	switch newType := r.Error.(type) {
 	case *ResponseMessageAckGUIDError:
-		err = newType
+		err = filterError(newType)
 	case *ResponseMessageAckGUIDErrors:
-		err = newType
+		err = filterErrors(newType)
 	}
 	return
 }
@@ -163,16 +176,28 @@ func (r ResponseMessageAckGUIDErrors) Error() (res string) {
 //	"ERROR": {
 //			"CODE": 28675,
 //			"SEQ": 1
+//			// OR
+//			"SEQ": "1"
 //	},
 type ResponseMessageAckGUIDError struct {
-	Code     int `json:"CODE"`
-	Sequence int `json:"SEQ"`
+	Code     interface{} `json:"CODE"`
+	Sequence interface{} `json:"SEQ"`
+}
+
+// GetCode returns the Code of the ResponseMessageAckGUIDError.
+func (r *ResponseMessageAckGUIDError) GetCode() ErrorCode {
+	return CastErrCode(r.Code)
+}
+
+// GetSequence returns the Sequence string representation of the ResponseMessageAckGUIDError.
+func (r *ResponseMessageAckGUIDError) GetSequence() string {
+	return rh.GetString(r.Sequence)
 }
 
 // Error implements the error interface.
 func (r *ResponseMessageAckGUIDError) Error() (res string) {
 	res = fmt.Sprintf(
-		"error ValueFirst: CODE: %d, SEQ: %d",
+		"error ValueFirst: CODE: %v, SEQ: %v",
 		r.Code,
 		r.Sequence,
 	)

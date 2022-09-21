@@ -90,8 +90,8 @@ github.com/fairyhunter13/phone v0.0.1 h1:ija0Z3OhNQXNNE9on8P9fx1yiG+Snlz0h6hFC5r
 github.com/fairyhunter13/phone v0.0.1/go.mod h1:M+2s1xUAbCaoBKnJDmVbEl64PvVJ33GsYptbRppcMTs=
 github.com/fairyhunter13/pool v0.0.0-20211114080908-60a828fe746c h1:+8wTxSaAJZ74C1NUYIUNoXiwB52SVs0c538bVruH41Y=
 github.com/fairyhunter13/pool v0.0.0-20211114080908-60a828fe746c/go.mod h1:RamDxwNsACUYVPVLx1yy9b7AYUoRpnsPkbJZKZqoAYs=
-github.com/fairyhunter13/reflecthelper/v5 v5.1.0 h1:K7pGyp2Us5//w5SRbVzl4V+C4F/zvRmS/22VnaOW7Cw=
-github.com/fairyhunter13/reflecthelper/v5 v5.1.0/go.mod h1:2B5ljKAeXw7wwaA8cYJweH29oL1z0Fy3LhJmCkz8M1g=
+github.com/fairyhunter13/reflecthelper/v5 v5.1.4 h1:lknA0SGnp2rWltw5fkltZbdmVsLtrjnAuKk/Lg/XDE0=
+github.com/fairyhunter13/reflecthelper/v5 v5.1.4/go.mod h1:2B5ljKAeXw7wwaA8cYJweH29oL1z0Fy3LhJmCkz8M1g=
 github.com/fairyhunter13/task/v2 v2.0.0 h1:+8bWxdEJj3JEXOL67Izkg0mZsC6CHfe2+JfeK0XPCjk=
 github.com/fairyhunter13/task/v2 v2.0.0/go.mod h1:mcS/qyLLN1Hj2kv2uXDx5EaxJ9Jojaf+2O6uOF5Ux+Q=
 github.com/fatih/color v1.7.0/go.mod h1:Zm6kSWBoL9eyXnKyktHP6abPY2pDugNf5KwzbycvMj4=
