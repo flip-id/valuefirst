@@ -78,15 +78,15 @@ func (r ResponseMessageAckGUIDs) GetError() (err error) {
 			return
 		}
 
-		err = *errList
+		err = errList
 	}()
 
 	for _, val := range r {
 		switch newType := val.Error.(type) {
 		case *ResponseMessageAckGUIDError:
-			errList.Append(newType)
+			errList.Append(filterError(newType))
 		case *ResponseMessageAckGUIDErrors:
-			errList.Append(newType)
+			errList.Append(filterErrors(newType))
 		}
 	}
 	return
@@ -137,9 +137,9 @@ func (r *ResponseMessageAckGUID) GetMessageErrors() (res *ResponseMessageAckGUID
 func (r *ResponseMessageAckGUID) GetError() (err error) {
 	switch newType := r.Error.(type) {
 	case *ResponseMessageAckGUIDError:
-		err = newType
+		err = filterError(newType)
 	case *ResponseMessageAckGUIDErrors:
-		err = newType
+		err = filterErrors(newType)
 	}
 	return
 }
@@ -163,16 +163,18 @@ func (r ResponseMessageAckGUIDErrors) Error() (res string) {
 //	"ERROR": {
 //			"CODE": 28675,
 //			"SEQ": 1
+//			// OR
+//			"SEQ": "1"
 //	},
 type ResponseMessageAckGUIDError struct {
-	Code     int `json:"CODE"`
-	Sequence int `json:"SEQ"`
+	Code     int    `json:"CODE"`
+	Sequence string `json:"SEQ"`
 }
 
 // Error implements the error interface.
 func (r *ResponseMessageAckGUIDError) Error() (res string) {
 	res = fmt.Sprintf(
-		"error ValueFirst: CODE: %d, SEQ: %d",
+		"error ValueFirst: CODE: %d, SEQ: %s",
 		r.Code,
 		r.Sequence,
 	)

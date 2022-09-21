@@ -1,3 +1,6 @@
+//go:build !integration
+// +build !integration
+
 package valuefirst
 
 import (
@@ -41,6 +44,7 @@ func (s *TestStruct) Setup(t *testing.T) *TestStruct {
 	s.Hub = s.Mock.Hub
 
 	s.HTTPClient = new(http.Client)
+	httpmock.ActivateNonDefault(s.HTTPClient)
 	return s
 }
 
@@ -68,7 +72,6 @@ func Test_client_SendSMS(t *testing.T) {
 					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIzNDU2Nzg5LCJuYW1lIjoiSm9zZXBoIn0.OpOSSw7e485LOP5PrzScxHb7SR6sAOMRckfFwi4rp7o",
 					nil,
 				)
-				httpmock.ActivateNonDefault(s.HTTPClient)
 				httpmock.RegisterResponder(
 					http.MethodPost,
 					BaseURL+URLActionSendSMS,
