@@ -4,9 +4,10 @@ go 1.17
 
 require (
 	github.com/fairyhunter13/dotenv v1.1.3
+	github.com/fairyhunter13/newtype v1.2.0
 	github.com/fairyhunter13/phone v0.0.1
 	github.com/fairyhunter13/pool v0.0.0-20211114080908-60a828fe746c
-	github.com/fairyhunter13/reflecthelper/v5 v5.1.0
+	github.com/fairyhunter13/reflecthelper/v5 v5.1.4
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/gofiber/fiber/v2 v2.34.1
 	github.com/gojek/heimdall/v7 v7.0.2

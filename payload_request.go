@@ -109,7 +109,18 @@ type RequestSendSMSMessage struct {
 	// SMS can contain up to 160 characters in Message Text.
 	// API allows user to send Message text of more than 160 characters.
 	// Credits will be deducted in the multiple of 160 characters according to the length of SMS.
-	Text string `json:"@TEXT"`
+	Text string `json:"@TEXT,omitempty"`
+
+	// It is now possible to schedule a message.
+	// To schedule message to go at a later time,
+	// user can specify “SEND_ON” date as attribute of SMS tag.
+	// Only absolute date is supported.
+	// The value should be given in “YYYY-MM-DD HH:MM:SS TIMEZONE” format.
+	// Time zone is difference w.r.t. to GMT.
+	// Example: "2022-09-21 14:20:00 GMT+07:00".
+	// For GMT Timezone, we can use both, either GMT+00:00 or GMT-00:00.
+	// Please refer Scheduling Support for more information on this feature.
+	SendOn string `json:"@SEND_ON,omitempty"`
 
 	// New Parameter TEMPLATEINFO has been added for above functionality
 	// which will contain the template id and variables value to be replaced in template text.
@@ -121,7 +132,7 @@ type RequestSendSMSMessage struct {
 	// related to TEMPLATEINFO parameter, which include like invalid templateid is provided,
 	// variables count mismatch than the template Text variables count,
 	// template text not found for the given template id.
-	TemplateInfo string `json:"@TEMPLATEINFO"`
+	TemplateInfo string `json:"@TEMPLATEINFO,omitempty"`
 
 	// Unique property of message. Default value is 0. For sending Flash SMS the value should be 1.
 	Property string `json:"@PROPERTY"`
@@ -130,15 +141,6 @@ type RequestSendSMSMessage struct {
 	// In future communication, server sends this value back to the client.
 	// This value is used in future to check status of the message.
 	ID string `json:"@ID"`
-
-	// It is now possible to schedule a message.
-	// To schedule message to go at a later time,
-	// user can specify “SEND_ON” date as attribute of SMS tag.
-	// Only absolute date is supported.
-	// The value should be given in “YYYY-MM-DD HH:MM:SS TIMEZONE” format.
-	// Time zone is difference w.r.t. to GMT.
-	// Please refer Scheduling Support for more information on this feature.
-	SendOn string `json:"@SEND_ON"`
 
 	// Describe the Sender as well as Receiver address.
 	Address RequestSendSMSMessageAddresses `json:"ADDRESS"`
